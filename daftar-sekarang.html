@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Sekarang — Sekolah Hijau</title>
+    <title>Daftar Sekarang — MA Islamiyah Mundu</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -62,7 +62,7 @@
 
     <header>
         <div class="container nav-wrapper">
-            <a href="index.html" class="logo">🌿 Sekolah<span>Hijau</span></a>
+            <a href="index.html" class="logo">🌿 MA Islamiyah <span>Mundu</span></a>
             <a href="index.html" class="kembali-link">← Kembali ke Beranda</a>
         </div>
     </header>
@@ -112,7 +112,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Sekolah Hijau — Jl. Raya Cihideung No. 88, Kota Bandung, Jawa Barat</p>
+            <p>&copy; 2026 MA Islamiyah Mundu — Jl. Karang Sari III No. 46, Kab. Cirebon, Jawa Barat</p>
         </div>
     </footer>
 
@@ -182,7 +182,7 @@
             doc.setTextColor(44, 110, 73);
             tengahTxt('FORMULIR PENDAFTARAN SISWA BARU', y, 16, 'bold');
             y += 5; garisDatar(y); y += 4;
-            tengahTxt('Sekolah Hijau — Jl. Raya Cihideung No. 88, Kota Bandung', y, 11);
+            tengahTxt('MA Islamiyah Mundu — Jl. Karang Sari III No. 46, Kab. Cirebon', y, 11);
             y += 5; garisDatar(y); y += 7;
             doc.setTextColor(0,0,0);
 
@@ -191,7 +191,7 @@
             tulis(formatBaris('2. Nomor Induk Siswa Nasional', D.nisn), kiri, y); y += 6;
             tulis(formatBaris('3. Jenis Kelamin', D.jenis_kelamin), kiri, y); y += 6;
             tulis(formatBaris('4. Tempat dan Tanggal Lahir', D.ttl), kiri, y); y += 6;
-            tulis(`5. Anak ke ${D.anak_ke}                            dari ${D.dari_saudara} saudara`, kiri, y); y += 6;
+            tulis(formatBaris(`5. Anak, ke ${D.anak_ke} dari ${D.dari_saudara} saudara`, kiri, y); y += 6;
             tulis(formatBaris('6. Status dalam Keluarga', D.status_keluarga), kiri, y); y += 6;
             tulis(formatBaris('7. Alamat Siswa', D.alamat_siswa), kiri, y); y += 5;
             garisDatar(y); y += 7;
