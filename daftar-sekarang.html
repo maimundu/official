@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Sekarang — Sekolah Hijau</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        :root {
+            --hijau-tua: #2c6e49; --hijau-medium: #40916c;
+            --hijau-sangat-muda: #d8f3dc; --kuning-emas: #f9c74f; --teks-gelap: #1b4332;
+        }
+        body { line-height: 1.6; color: var(--teks-gelap); background-color: var(--hijau-sangat-muda); }
+        .container { width: 90%; max-width: 1100px; margin: 0 auto; }
+        header {
+            background: linear-gradient(135deg, var(--hijau-tua), var(--hijau-medium)); color: white;
+            padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.6rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: white; }
+        .logo span { color: var(--kuning-emas); }
+        .kembali-link {
+            color: white; text-decoration: none; font-weight: 500;
+            padding: 0.6rem 1.2rem; border-radius: 6px;
+            background-color: rgba(255,255,255,0.15); transition: all 0.3s ease;
+        }
+        .kembali-link:hover { background-color: rgba(255,255,255,0.3); color: var(--kuning-emas); }
+        .pendaftaran { padding: 3rem 0; }
+        .pendaftaran-judul { text-align: center; margin-bottom: 2.5rem; }
+        .pendaftaran-judul h1 { font-size: 2.3rem; color: var(--hijau-tua); margin-bottom: 0.5rem; }
+        .pendaftaran-judul p { font-size: 1.1rem; color: var(--hijau-medium); }
+        .form-kartu { background-color: white; padding: 2.5rem; border-radius: 16px; box-shadow: 0 8px 30px rgba(44, 110, 73, 0.15); }
+        .form-grup { margin-bottom: 1rem; }
+        .form-grup label { display: block; font-weight: 500; margin-bottom: 0.4rem; color: var(--teks-gelap); }
+        .form-grup input, .form-grup textarea {
+            width: 100%; padding: 0.75rem; border: 1px solid #ccc;
+            border-radius: 6px; font-size: 0.95rem;
+        }
+        .form-dua { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .btn-kirim {
+            width: 100%; padding: 1rem;
+            background: linear-gradient(135deg, var(--hijau-tua), var(--hijau-medium));
+            color: white; border: none; border-radius: 10px;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease; margin-top: 1rem;
+        }
+        .btn-kirim:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(44, 110, 73, 0.3); }
+        .pesan-berhasil {
+            display: none; margin-top: 1.2rem; padding: 1rem;
+            background-color: #d1e7dd; color: #0f5132;
+            border-radius: 8px; font-weight: 500; text-align: center;
+        }
+        footer { background-color: var(--teks-gelap); color: white; text-align: center; padding: 1.5rem 0; margin-top: 2rem; }
+        @media (max-width: 768px) {
+            .form-dua { grid-template-columns: 1fr; }
+            .form-kartu { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-wrapper">
+            <a href="index.html" class="logo">🌿 Sekolah<span>Hijau</span></a>
+            <a href="index.html" class="kembali-link">← Kembali ke Beranda</a>
+        </div>
+    </header>
+
+    <section class="pendaftaran">
+        <div class="container">
+            <div class="pendaftaran-judul">
+                <h1>📝 Formulir Pendaftaran Siswa Baru</h1>
+                <p>Isi data lengkap → klik tombol → PDF langsung terunduh</p>
+            </div>
+
+            <div class="form-kartu">
+                <form id="formPendaftaran">
+                    <div class="form-grup"><label>1. Nama Siswa (Lengkap)</label><input type="text" id="nama_siswa" required></div>
+                    <div class="form-grup"><label>2. Nomor Induk Siswa Nasional (NISN)</label><input type="text" id="nisn"></div>
+                    <div class="form-grup"><label>3. Jenis Kelamin</label><input type="text" id="jenis_kelamin" placeholder="Laki-laki / Perempuan" required></div>
+                    <div class="form-grup"><label>4. Tempat dan Tanggal Lahir</label><input type="text" id="ttl" placeholder="Contoh: Cirebon, 20 Juli 2090" required></div>
+                    <div class="form-dua">
+                        <div class="form-grup"><label>5. Anak ke</label><input type="text" id="anak_ke" placeholder="Contoh: 1"></div>
+                        <div class="form-grup"><label>Dari berapa saudara</label><input type="text" id="dari_saudara" placeholder="Contoh: 100"></div>
+                    </div>
+                    <div class="form-grup"><label>6. Status dalam Keluarga</label><input type="text" id="status_keluarga" placeholder="Contoh: Anak Kandung"></div>
+                    <div class="form-grup"><label>7. Alamat Siswa</label><textarea id="alamat_siswa" rows="2" placeholder="Contoh: Dusun Macan" required></textarea></div>
+                    <div class="form-grup"><label>8. Nama Madrasah/Sekolah Asal</label><input type="text" id="sekolah_asal" placeholder="Contoh: MTs Jagatraya"></div>
+                    <div class="form-grup"><label>9. Alamat Madrasah/Sekolah Asal</label><textarea id="alamat_sekolah_asal" rows="2" placeholder="Contoh: Jl. Jagatraya"></textarea></div>
+                    <h3 style="margin:1.5rem 0 0.8rem; font-size:1.1rem; color:var(--hijau-tua);">10. Nama Orang Tua</h3>
+                    <div class="form-grup"><label>a. Ayah</label><input type="text" id="nama_ayah" placeholder="Contoh: Urman"></div>
+                    <div class="form-grup"><label>b. Ibu</label><input type="text" id="nama_ibu" placeholder="Contoh: Disni"></div>
+                    <div class="form-grup"><label>11. Alamat Orang Tua</label><textarea id="alamat_ortu" rows="2" placeholder="Contoh: Jl. Man"></textarea></div>
+                    <div class="form-grup"><label>12. Agama</label><input type="text" id="agama" placeholder="Contoh: Islam"></div>
+                    <h3 style="margin:1.5rem 0 0.8rem; font-size:1.1rem; color:var(--hijau-tua);">13. Pekerjaan Orang Tua</h3>
+                    <div class="form-dua">
+                        <div class="form-grup"><label>a. Ayah</label><input type="text" id="pekerjaan_ayah" placeholder="Contoh: PNS"></div>
+                        <div class="form-grup"><label>b. Ibu</label><input type="text" id="pekerjaan_ibu" placeholder="Contoh: Ibu Rumah Tangga"></div>
+                    </div>
+                    <div class="form-grup"><label>14. Nama Wali</label><input type="text" id="nama_wali" placeholder="Contoh: Urman"></div>
+                    <div class="form-grup"><label>15. Alamat Wali</label><textarea id="alamat_wali" rows="2" placeholder="Contoh: Jl. Man"></textarea></div>
+                    <div class="form-grup"><label>Telepon Wali</label><input type="text" id="telepon_wali" placeholder="Contoh: 0 Blong"></div>
+                    <div class="form-grup"><label>16. Pekerjaan Wali</label><input type="text" id="pekerjaan_wali" placeholder="Contoh: Ku"></div>
+
+                    <button type="submit" class="btn-kirim">✅ Kirim & Unduh PDF</button>
+                    <div class="pesan-berhasil" id="pesanBerhasil">✅ PDF berhasil dibuat!</div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Sekolah Hijau — Jl. Raya Cihideung No. 88, Kota Bandung, Jawa Barat</p>
+        </div>
+    </footer>
+
+    <script>
+        const { jsPDF } = window.jspdf;
+
+        // Fungsi tambah spasi agar semua tanda titik dua sejajar
+        function formatBaris(label, nilai) {
+            const lebarTetap = 42; // jumlah karakter tetap sebelum titik dua
+            const spasi = ' '.repeat(lebarTetap - label.length);
+            return label + spasi + ': ' + nilai;
+        }
+
+        document.getElementById('formPendaftaran').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Baca semua nilai formulir
+            const D = {
+                nama_siswa: document.getElementById('nama_siswa').value,
+                nisn: document.getElementById('nisn').value || '-',
+                jenis_kelamin: document.getElementById('jenis_kelamin').value,
+                ttl: document.getElementById('ttl').value,
+                anak_ke: document.getElementById('anak_ke').value || '-',
+                dari_saudara: document.getElementById('dari_saudara').value || '-',
+                status_keluarga: document.getElementById('status_keluarga').value || '-',
+                alamat_siswa: document.getElementById('alamat_siswa').value || '-',
+                sekolah_asal: document.getElementById('sekolah_asal').value || '-',
+                alamat_sekolah_asal: document.getElementById('alamat_sekolah_asal').value || '-',
+                nama_ayah: document.getElementById('nama_ayah').value || '-',
+                nama_ibu: document.getElementById('nama_ibu').value || '-',
+                alamat_ortu: document.getElementById('alamat_ortu').value || '-',
+                agama: document.getElementById('agama').value || '-',
+                pekerjaan_ayah: document.getElementById('pekerjaan_ayah').value || '-',
+                pekerjaan_ibu: document.getElementById('pekerjaan_ibu').value || '-',
+                nama_wali: document.getElementById('nama_wali').value || '-',
+                alamat_wali: document.getElementById('alamat_wali').value || '-',
+                telepon_wali: document.getElementById('telepon_wali').value || '-',
+                pekerjaan_wali: document.getElementById('pekerjaan_wali').value || '-'
+            };
+
+            // Buat PDF A4
+            const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+            const lebar = 210;
+            const kiri = 22;
+            const kanan = 188;
+            const tengah = lebar / 2;
+            let y = 20;
+
+            function tulis(txt, x, yPos, ukuran=10.5, tebal='normal') {
+                doc.setFontSize(ukuran);
+                doc.setFont('courier', tebal); // Pakai font lebar tetap = sejajar sempurna
+                doc.text(txt, x, yPos);
+                y = yPos;
+            }
+            function tengahTxt(txt, yPos, ukuran=14, tebal='bold') {
+                doc.setFontSize(ukuran);
+                doc.setFont('helvetica', tebal);
+                doc.text(txt, tengah, yPos, { align: 'center' });
+                y = yPos;
+            }
+            function garisDatar(yPos, x1=kiri, x2=kanan) {
+                doc.setDrawColor(0,0,0);
+                doc.line(x1, yPos, x2, yPos);
+            }
+
+            // JUDUL
+            doc.setTextColor(44, 110, 73);
+            tengahTxt('FORMULIR PENDAFTARAN SISWA BARU', y, 16, 'bold');
+            y += 5; garisDatar(y); y += 4;
+            tengahTxt('Sekolah Hijau — Jl. Raya Cihideung No. 88, Kota Bandung', y, 11);
+            y += 5; garisDatar(y); y += 7;
+            doc.setTextColor(0,0,0);
+
+            // ISI FORMULIR — TANDA TITIK DUA SEMUA SEJAJAR
+            tulis(formatBaris('1. Nama Siswa (Lengkap)', D.nama_siswa), kiri, y); y += 6;
+            tulis(formatBaris('2. Nomor Induk Siswa Nasional', D.nisn), kiri, y); y += 6;
+            tulis(formatBaris('3. Jenis Kelamin', D.jenis_kelamin), kiri, y); y += 6;
+            tulis(formatBaris('4. Tempat dan Tanggal Lahir', D.ttl), kiri, y); y += 6;
+            tulis(`5. Anak ke ${D.anak_ke}                            dari ${D.dari_saudara} saudara`, kiri, y); y += 6;
+            tulis(formatBaris('6. Status dalam Keluarga', D.status_keluarga), kiri, y); y += 6;
+            tulis(formatBaris('7. Alamat Siswa', D.alamat_siswa), kiri, y); y += 5;
+            garisDatar(y); y += 7;
+            tulis(formatBaris('8. Nama Madrasah/Sekolah Asal', D.sekolah_asal), kiri, y); y += 6;
+            tulis(formatBaris('9. Alamat Madrasah/Sekolah Asal', D.alamat_sekolah_asal), kiri, y); y += 6;
+            tulis('10. Nama Orang Tua', kiri, y); y += 6;
+            tulis(formatBaris('    a. Ayah', D.nama_ayah), kiri, y); y += 6;
+            tulis(formatBaris('    b. Ibu', D.nama_ibu), kiri, y); y += 6;
+            tulis(formatBaris('11. Alamat Orang Tua', D.alamat_ortu), kiri, y); y += 5;
+            garisDatar(y); y += 7;
+            tulis(formatBaris('12. Agama', D.agama), kiri, y); y += 6;
+            tulis('13. Pekerjaan Orang Tua', kiri, y); y += 6;
+            tulis(formatBaris('    a. Ayah', D.pekerjaan_ayah), kiri, y); y += 6;
+            tulis(formatBaris('    b. Ibu', D.pekerjaan_ibu), kiri, y); y += 6;
+            tulis(formatBaris('14. Nama Wali', D.nama_wali), kiri, y); y += 6;
+            tulis(formatBaris('15. Alamat Wali', D.alamat_wali), kiri, y); y += 6;
+            tulis(formatBaris('    Telepon', D.telepon_wali), kiri, y); y += 6;
+            tulis(formatBaris('16. Pekerjaan Wali', D.pekerjaan_wali), kiri, y); y += 10;
+
+            // Tanda Tangan
+            const tgl = new Date().toLocaleDateString('id-ID', { day:'2-digit', month:'long', year:'numeric' });
+            tulis(`Mundu, ................................................ ${tgl}`, kiri + 85, y); y += 12;
+            tulis('Orang Tua / Wali,', kiri, y);
+            tulis('Nama Siswa,', kiri + 130, y); y += 20;
+            garisDatar(y, kiri, kiri + 65);
+            garisDatar(y, kiri + 128, kanan);
+
+            // Unduh PDF
+            doc.save(`Pendaftaran_${D.nama_siswa.replace(/\s+/g, '_')}.pdf`);
+
+            // Tampilkan pesan & reset
+            document.getElementById('pesanBerhasil').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('formPendaftaran').reset();
+                document.getElementById('pesanBerhasil').style.display = 'none';
+            }, 6000);
+        });
+    </script>
+</body>
+</html>
