@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sekolah Hijau — Membangun Generasi Peduli Lingkungan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --hijau-tua: #2c6e49;
+            --hijau-medium: #40916c;
+            --hijau-muda: #52b788;
+            --hijau-sangat-muda: #d8f3dc;
+            --kuning-emas: #f9c74f;
+            --abu-lembut: #f8f9fa;
+            --teks-gelap: #1b4332;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--teks-gelap);
+            background-color: #fff;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header & Navigasi */
+        header {
+            background: linear-gradient(135deg, var(--hijau-tua), var(--hijau-medium));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--kuning-emas);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(255,255,255,0.2);
+            color: var(--kuning-emas);
+        }
+
+        nav a.tombol-daftar {
+            background-color: var(--kuning-emas);
+            color: var(--teks-gelap);
+            font-weight: 600;
+        }
+
+        nav a.tombol-daftar:hover {
+            background-color: #f8961e;
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Bagian Utama / Hero */
+        .hero {
+            background: linear-gradient(rgba(44, 110, 73, 0.85), rgba(64, 145, 108, 0.85)), 
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c7f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .btn-utama {
+            background-color: var(--kuning-emas);
+            color: var(--teks-gelap);
+        }
+
+        .btn-utama:hover {
+            background-color: #f8961e;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(249, 199, 79, 0.35);
+        }
+
+        .btn-kedua {
+            background-color: white;
+            color: var(--hijau-tua);
+        }
+
+        .btn-kedua:hover {
+            background-color: var(--hijau-sangat-muda);
+            transform: translateY(-3px);
+        }
+
+        /* Bagian Umum */
+        section {
+            padding: 4.5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--hijau-tua);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 70px;
+            height: 4px;
+            background-color: var(--kuning-emas);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* Tentang Sekolah */
+        .tentang-sekolah {
+            background-color: var(--hijau-sangat-muda);
+        }
+
+        .tentang-konten {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .tentang-gambar img {
+            width: 100%;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(44, 110, 73, 0.2);
+        }
+
+        .tentang-teks h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            color: var(--hijau-tua);
+        }
+
+        .tentang-teks p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        /* Keunggulan Sekolah */
+        .keunggulan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .keunggulan-kartu {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(44, 110, 73, 0.1);
+            border-top: 5px solid var(--hijau-medium);
+            transition: transform 0.3s ease;
+        }
+
+        .keunggulan-kartu:hover {
+            transform: translateY(-10px);
+        }
+
+        .keunggulan-ikon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .keunggulan-kartu h3 {
+            color: var(--hijau-tua);
+            margin-bottom: 1rem;
+        }
+
+        /* Galeri Sekolah */
+        .galeri-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .galeri-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .galeri-item img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Berita Terbaru */
+        .berita {
+            background-color: var(--abu-lembut);
+        }
+
+        .berita-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .berita-kartu {
+            background-color: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .berita-kartu img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .berita-isi {
+            padding: 1.5rem;
+        }
+
+        .berita-tanggal {
+            font-size: 0.9rem;
+            color: var(--hijau-medium);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .berita-isi h3 {
+            margin-bottom: 1rem;
+            color: var(--teks-gelap);
+        }
+
+        .berita-isi a {
+            color: var(--hijau-medium);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .berita-isi a:hover {
+            color: var(--hijau-tua);
+            text-decoration: underline;
+        }
+
+        /* Kontak Sekolah */
+        .kontak {
+            background: linear-gradient(135deg, var(--hijau-tua), var(--hijau-medium));
+            color: white;
+        }
+
+        .kontak .section-title {
+            color: white;
+        }
+
+        .kontak-konten {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .kontak-info h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .kontak-info p {
+            margin-bottom: 0.8rem;
+        }
+
+        .kontak-form input,
+        .kontak-form textarea {
+            width: 100%;
+            padding: 0.9rem;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .kontak-form button {
+            background-color: var(--kuning-emas);
+            color: var(--teks-gelap);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .kontak-form button:hover {
+            background-color: #f8961e;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--teks-gelap);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Tampilan Seluler */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--hijau-tua);
+                flex-direction: column;
+                align-items: center;
+                padding: 1.5rem 0;
+                gap: 0.8rem;
+                display: none;
+            }
+
+            nav ul.aktif {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .tentang-konten {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bagian Kepala & Navigasi -->
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo">🌿 Sekolah<span>Hijau</span></div>
+            <div class="menu-toggle" id="menuToggle">☰</div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#beranda">Beranda</a></li>
+                    <li><a href="#tentang">Tentang</a></li>
+                    <li><a href="#unggulan">Keunggulan</a></li>
+                    <li><a href="#galeri">Galeri</a></li>
+                    <li><a href="#berita">Berita</a></li>
+                    <li><a href="#kontak">Kontak</a></li>
+                    <li><a href="daftar-sekarang.html" class="tombol-daftar">📝 Daftar Sekarang</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Bagian Utama -->
+    <section class="hero" id="beranda">
+        <div class="container">
+            <h1>Selamat Datang di Sekolah Hijau</h1>
+            <p>Membentuk generasi cerdas, berkarakter, dan peduli lingkungan demi masa depan bumi yang lebih baik — belajar, tumbuh, dan berkembang dalam suasana asri dan sejuk.</p>
+            <a href="daftar-sekarang.html" class="btn btn-utama">📝 Daftar Sekarang</a>
+            <a href="#tentang" class="btn btn-kedua">Pelajari Lebih Lanjut</a>
+        </div>
+    </section>
+
+    <!-- Tentang Sekolah -->
+    <section class="tentang-sekolah" id="tentang">
+        <div class="container">
+            <h2 class="section-title">Tentang Sekolah Hijau</h2>
+            <div class="tentang-konten">
+                <div class="tentang-gambar">
+                    <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Gedung Sekolah Hijau">
+                </div>
+                <div class="tentang-teks">
+                    <h3>Sekolah yang Menyenangkan & Ramah Lingkungan</h3>
+                    <p>Sekolah Hijau didirikan dengan visi menyelenggarakan pendidikan berkualitas yang selaras dengan alam. Kami percaya bahwa lingkungan belajar yang bersih, hijau, dan sejuk dapat meningkatkan semangat serta prestasi peserta didik.</p>
+                    <p>Selain pelajaran akademik yang unggul, kami juga menanamkan nilai-nilai cinta lingkungan, hemat energi, pengelolaan sampah, dan pelestarian alam agar siswa tumbuh menjadi pribadi yang tidak hanya pintar, tetapi juga bertanggung jawab terhadap bumi.</p>
+                    <p>Lingkungan sekolah kami dipenuhi pepohonan dan tanaman hijau, menciptakan suasana belajar yang nyaman, segar, dan inspiratif setiap harinya.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Keunggulan Sekolah -->
+    <section id="unggulan">
+        <div class="container">
+            <h2 class="section-title">Keunggulan Sekolah Kami</h2>
+            <div class="keunggulan-grid">
+                <div class="keunggulan-kartu">
+                    <div class="keunggulan-ikon">🌳</div>
+                    <h3>Lingkungan Asri</h3>
+                    <p>Area sekolah yang hijau, sejuk, dan bebas polusi sehingga menciptakan kenyamanan belajar yang maksimal.</p>
+                </div>
+                <div class="keunggulan-kartu">
+                    <div class="keunggulan-ikon">📚</div>
+                    <h3>Pendidikan Berkualitas</h3>
+                    <p>Kurikulum yang disesuaikan dengan perkembangan zaman dengan didukung tenaga pengajar yang berkompeten.</p>
+                </div>
+                <div class="keunggulan-kartu">
+                    <div class="keunggulan-ikon">♻️</div>
+                    <h3>Program Peduli Lingkungan</h3>
+                    <p>Kegiatan rutin menanam pohon, daur ulang sampah, serta penghematan air dan energi.</p>
+                </div>
+                <div class="keunggulan-kartu">
+                    <div class="keunggulan-ikon">🎯</div>
+                    <h3>Pengembangan Karakter</h3>
+                    <p>Membentuk siswa yang berakhlak mulia, mandiri, kreatif, dan memiliki kepedulian sosial yang tinggi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri Sekolah -->
+    <section class="tentang-sekolah" id="galeri">
+        <div class="container">
+            <h2 class="section-title">Galeri Sekolah</h2>
+            <div class="galeri-grid">
+                <div class="galeri-item">
+                    <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80" alt="Suasana Kelas">
+                </div>
+                <div class="galeri-item">
+                    <img src="https://images.unsplash.com/photo-1577896851213-6150a6cf1f9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Halaman Sekolah Hijau">
+                </div>
+                <div class="galeri-item">
+                    <img src="https://images.unsplash.com/photo-1599427303313-07b1d4d9656b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Kegiatan Luar Kelas">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Berita Terbaru -->
+    <section class="berita" id="berita">
+        <div class="container">
+            <h2 class="section-title">Berita Terbaru</h2>
+            <div class="berita-grid">
+                <div class="berita-kartu">
+                    <img src="https://images.unsplash.com/photo-1542816417-0983c9c9ad53?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Menanam Pohon Bersama">
+                    <div class="berita-isi">
+                        <div class="berita-tanggal">10 Agustus 2026</div>
+                        <h3>Kegiatan Menanam 1000 Pohon di Sekolah</h3>
+                        <p>Seluruh warga sekolah bekerja sama menanam ribu bibit pohon untuk memperluas ruang terbuka hijau...</p>
+                        <a href="#">Baca Selengkapnya →</a>
+                    </div>
+                </div>
+                <div class="berita-kartu">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Penghargaan Sekolah">
+                    <div class="berita-isi">
+                        <div class="berita-tanggal">01 Agustus 2026</div>
+                        <h3>Juara 1 Sekolah Adiwiyata Tingkat Provinsi</h3>
+                        <p>Kami bangga meraih penghargaan Sekolah Adiwiyata berkat komitmen menjaga lingkungan dan pembelajaran berbasis alam...</p>
+                        <a href="#">Baca Selengkapnya →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontak Sekolah -->
+    <section class="kontak" id="kontak">
+        <div class="container">
+            <h2 class="section-title">Hubungi Kami</h2>
+            <div class="kontak-konten">
+                <div class="kontak-info">
+                    <h3>Informasi Sekolah</h3>
+                    <p><strong>Alamat:</strong> Jl. Raya Cihideung No. 88, Kota Bandung, Jawa Barat</p>
+                    <p><strong>Telepon:</strong> (022) 1234567</p>
+                    <p><strong>Email:</strong> info@sekolahhijau.sch.id</p>
+                    <p><strong>Jam Operasional:</strong> Senin–Jumat, 07.00–15.00 WIB</p>
+                </div>
+                <div class="kontak-form">
+                    <form>
+                        <input type="text" placeholder="Nama Lengkap" required>
+                        <input type="email" placeholder="Alamat Email" required>
+                        <input type="text" placeholder="Subjek Pesan">
+                        <textarea rows="5" placeholder="Tulis pesan Anda..." required></textarea>
+                        <button type="submit" class="btn">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kaki Halaman -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Sekolah Hijau — Semua Hak Dilindungi. | Membangun Sekolah yang Hijau, Asri, dan Nyaman.</p>
+        </div>
+    </footer>
+
+    <!-- Skrip -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('aktif');
+        });
+
+        document.querySelectorAll('#navMenu a').forEach(tautan => {
+            tautan.addEventListener('click', () => {
+                navMenu.classList.remove('aktif');
+            });
+        });
+    </script>
+
+</body>
+</html>
